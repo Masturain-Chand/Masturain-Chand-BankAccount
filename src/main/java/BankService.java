@@ -23,6 +23,8 @@ public class BankService {
      * @param amount the amount to be deposited.
      */
     public void deposit(double amount){
+        this.balance += amount;
+        this.balance = roundAvoid(this.balance);
 
     }
 
@@ -32,6 +34,13 @@ public class BankService {
      * @param amount the amount to be withdrawn.
      */
     public void withdraw(double amount){
+        if (this.balance >= amount) {
+            this.balance -= amount;
+            this.balance = roundAvoid(this.balance);
+        } else {
+            System.out.println("\nWithdraw failed!\nNot enough money in the account.");
+            System.out.println("Please check your balance.\n");
+        }
 
     }
 
@@ -40,6 +49,13 @@ public class BankService {
      * @return the user's balance.
      */
     public double getBalance(){
-        return 0;
+        return this.balance;
     }
-}
+    // A method for rounding to two decimal places
+    private  double roundAvoid(double value) {
+        int places = 2;
+        double scale = Math.pow(10, places);
+        return Math.round(value * scale) / scale;
+    }
+    
+    }
